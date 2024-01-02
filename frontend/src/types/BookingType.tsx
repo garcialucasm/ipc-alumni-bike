@@ -2,17 +2,22 @@ import { BikeSize } from "./BikeType";
 import { UserData } from "./UserType";
 
 export enum BookingStatus {
-  FREE = "free",
-  BOOKED = "booked",
-  HANDEDOVER = "handedOver",
-  RETURNED = "returned",
-  CANCELED = "canceled",
+  BOOKED = "BOOKED",
+  DELIVERED = "DELIVERED",
+  RETURNED = "RETURNED",
+  CANCELED = "CANCELED",
 }
 
-interface BookingType {
+export enum BookingType {
+  SINGLE = "SINGLE",
+  GROUP = "GROUP",
+  CLASSROOM = "CLASSROOM",
+}
+
+interface Booking {
   bookingBikeSize: BikeSize;
   bookingUserData: UserData;
-  bookingStatus: BookingStatus;
+  bookingStatus?: BookingStatus;
 }
 
-export type { BookingType };
+export type { Booking };

@@ -1,16 +1,16 @@
 export enum BikeSize {
-  NONE = "none",
-  CLASSIC = "classic",
-  SMALL = "small",
-  STANDARD = "standard",
-  FREE = "free"
+  NONE = "NONE",
+  CLASSIC = "CLASSIC",
+  SMALL = "SMALL",
+  STANDARD = "STANDARD",
+  FREE = "FREE"
 }
 
 export enum BikeStatus {
-  BOOKED = "booked",
-  INUSE = "inUse",
-  DISABLED = "disabled",
-  FREE = "free",
+  BOOKED = "BOOKED",
+  INUSE = "INUSE",
+  DISABLED = "DISABLED",
+  FREE = "FREE",
 }
 
 export interface BikeAvailability {

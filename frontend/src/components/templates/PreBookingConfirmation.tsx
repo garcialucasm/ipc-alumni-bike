@@ -2,13 +2,13 @@ import React from "react";
 import Button from "@/components/atoms/Button";
 import { SingleBookingSection } from "@/types/NavigationSections";
 import Infobox from "../organisms/Infobox";
-import { BookingType } from "@/types/BookingType";
+import { Booking } from "@/types/BookingType";
 
 function PreBookingConfirmation(props: {
   onNavigation: (navigationButton: {
     buttonName: SingleBookingSection;
   }) => void;
-  bookingData: BookingType;
+  bookingData: Booking;
 }) {
   const bookingData = props.bookingData;
 

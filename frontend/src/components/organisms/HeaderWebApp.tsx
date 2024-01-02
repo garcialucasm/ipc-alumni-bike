@@ -31,7 +31,7 @@ function HeaderWebApp(props: {
         <NavbarWebApp />
         <div className="overflow-x-auto w-full flex text-xxs md:text-xs text-left">
           <Link
-            href="/home-keykeeper"
+            href="/home-app"
             className={`flex items-center header-menu-items ms-0 ${
               currentMenuPage == MenuNavigation.homePageApp
                 ? "header-menu-item-current-page"

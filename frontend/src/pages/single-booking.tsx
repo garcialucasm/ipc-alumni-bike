@@ -5,13 +5,14 @@ import PreBookingConfirmation from "@/components/templates/PreBookingConfirmatio
 import BookingConfirmed from "@/components/templates/BookingConfirmed";
 import { BikeSize } from "@/types/BikeType";
 import { UserData } from "@/types/UserType";
-import { BookingStatus, BookingType } from "@/types/BookingType";
+import { BookingStatus, Booking } from "@/types/BookingType";
 import {
   MenuNavigation,
   SingleBookingSection,
 } from "@/types/NavigationSections";
 import Stepper from "@/components/organisms/Stepper";
 import HeaderWebApp from "@/components/organisms/HeaderWebApp";
+import { createSingleBookingFetchApi } from "@/services/bookingApi";
 
 function HomeSingleBooking() {
   // Creating states for show of hide components
@@ -22,11 +23,6 @@ function HomeSingleBooking() {
   // Creating state for bikeSizeSelected
   const [bikeSizeSelected, setBikeSize] = useState(BikeSize.NONE);
 
-  // Creating state for currentBookingStatus
-  const [currentBookingStatus, setCurrentBookingStatus] = useState(
-    BookingStatus.FREE
-  );
-
   // Creating state for enteredUserData in InputStudentData
   const [enteredUserData, setEnteredUserData] = useState<UserData>({
     firstName: "",
@@ -35,14 +31,14 @@ function HomeSingleBooking() {
   });
 
   // Creating state to manage user data and then submit booking
-  const [bookingData, setBookingData] = useState<BookingType>({
+  const [bookingData, setBookingData] = useState<Booking>({
     bookingBikeSize: BikeSize.NONE,
     bookingUserData: {
       firstName: "",
       lastName: "",
       roomNumber: "",
     },
-    bookingStatus: BookingStatus.FREE,
+    bookingStatus: BookingStatus.BOOKED,
   });
 
   // Creating state to check if isUserDataValid and only then submit booking
@@ -65,12 +61,6 @@ function HomeSingleBooking() {
     setBikeSize(bikeSizeSelected);
   }
 
-  // TODO
-  // Create a function to validate user data input
-  function checkEnteredUserData() {
-    setIsUserDataValid(true);
-  }
-
   // Update bookingData after states [bikeSizeSelected, isUserDataValid or enteredUserDataboth] change
   useEffect(() => {
     setBookingData((prevBookingData) => ({
@@ -80,43 +70,19 @@ function HomeSingleBooking() {
     setBookingData({
       bookingBikeSize: bikeSizeSelected,
       bookingUserData: enteredUserData,
-      bookingStatus: currentBookingStatus,
     });
-
-    // TODO
-    // Choose a strategic location to leave this function call (checkEnteredUserData)
-    checkEnteredUserData();
-  }, [
-    bikeSizeSelected,
-    isUserDataValid,
-    enteredUserData,
-    currentBookingStatus,
-  ]);
+  }, [bikeSizeSelected, isUserDataValid, enteredUserData]);
 
   // TODO
   // Option to confirm Booking or Return to user data input
-  function handleBookingConfirmation() {
+  async function handleBookingConfirmation() {
     // Temp - Submit confirmation
-    setCurrentBookingStatus(BookingStatus.BOOKED);
     const buttonOnConfirmation = SingleBookingSection.bookingConfirmationStatus;
     if (
       buttonOnConfirmation === SingleBookingSection.bookingConfirmationStatus
     ) {
-      alert(
-        buttonOnConfirmation +
-          "\n" +
-          "Bike Size Selected : " +
-          bookingData.bookingBikeSize +
-          "\n" +
-          "User Name: " +
-          bookingData.bookingUserData.firstName +
-          " " +
-          bookingData.bookingUserData.lastName +
-          "\n" +
-          "User Room: " +
-          bookingData.bookingUserData.roomNumber +
-          "\n"
-      );
+      const result = await createSingleBookingFetchApi(bookingData);
+      console.log(result);
       //function to submit data
     } else if (buttonOnConfirmation === SingleBookingSection.inputUserData) {
       setIsUserDataValid(false);

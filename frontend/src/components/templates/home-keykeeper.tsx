@@ -1,6 +1,6 @@
 import Head from "@/components/atoms/Head";
 import Link from "next/link";
-import Login from "./login";
+import Login from "../../pages/login";
 import HeaderWebApp from "@/components/organisms/HeaderWebApp";
 import AvailabilityContainer, {
   AvailabilityConfig,

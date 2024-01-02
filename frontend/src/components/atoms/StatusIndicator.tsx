@@ -8,7 +8,7 @@ enum StatusColorClass {
   YELLOW = "bg-amber-500",
   RED = "bg-rose-500",
   GRAY = "bg-slate-300",
-  WHITE = "bg-white-500",
+  WHITE = "bg-slate-100",
 }
 enum AnimationStatusClass {
   NONE = "",
@@ -20,36 +20,34 @@ enum AnimationStatusClass {
 function getStatusColor(status: BookingStatus | UserStatus | BikeStatus) {
   let statusColorClass: string;
   let animationStatusClass: string;
+  let bookingStatus = status.toUpperCase();
 
-  if (
-    status === BookingStatus.RETURNED ||
-    status === BikeStatus.FREE ||
-    status === UserStatus.FREE
-  ) {
+  if (bookingStatus === BikeStatus.FREE || bookingStatus === UserStatus.FREE) {
     statusColorClass = StatusColorClass.GREEN;
     animationStatusClass = AnimationStatusClass.FREE;
   } else if (
-    status === BookingStatus.BOOKED ||
-    status === BikeStatus.BOOKED ||
-    status === UserStatus.BOOKED
+    bookingStatus === BookingStatus.BOOKED ||
+    bookingStatus === BikeStatus.BOOKED ||
+    bookingStatus === UserStatus.BOOKED
   ) {
     statusColorClass = StatusColorClass.YELLOW;
     animationStatusClass = AnimationStatusClass.BOOKED;
   } else if (
-    status === BookingStatus.HANDEDOVER ||
-    status === BikeStatus.INUSE ||
-    status === UserStatus.INUSE
+    bookingStatus === BookingStatus.DELIVERED ||
+    bookingStatus === BikeStatus.INUSE ||
+    bookingStatus === UserStatus.INUSE
   ) {
     statusColorClass = StatusColorClass.RED;
     animationStatusClass = AnimationStatusClass.INUSE;
   } else if (
-    status === BookingStatus.CANCELED ||
-    status === BikeStatus.DISABLED
+    bookingStatus === BookingStatus.CANCELED ||
+    bookingStatus === BookingStatus.RETURNED ||
+    bookingStatus === BikeStatus.DISABLED
   ) {
     statusColorClass = StatusColorClass.GRAY;
     animationStatusClass = AnimationStatusClass.NONE;
   } else {
-    statusColorClass = StatusColorClass.GRAY;
+    statusColorClass = StatusColorClass.WHITE;
     animationStatusClass = AnimationStatusClass.NONE;
   }
 

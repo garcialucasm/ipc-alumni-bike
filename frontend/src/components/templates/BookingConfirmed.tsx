@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { BookingType } from "@/types/BookingType";
+import { Booking } from "@/types/BookingType";
 import Button from "../atoms/Button";
 import { IconSvgProcessConfirmed } from "../atoms/IconsSvg";
 import Infobox from "../organisms/Infobox";
@@ -8,7 +8,7 @@ import NextSteps from "../molecules/NextSteps";
 
 function BookingConfimed(props: {
   onNavigation: (navigationButton: any) => void;
-  bookingData: BookingType;
+  bookingData: Booking;
 }) {
   const bookingData = props.bookingData;
   const [showNextSteps, setShowNextSteps] = useState(false);
@@ -45,7 +45,7 @@ function BookingConfimed(props: {
             <span>See the Rules</span>
           </div>
         </a>
-        <Link href="/home-keykeeper">
+        <Link href="/home-app">
           <div className="btn-return">Go to Main Page</div>
         </Link>
       </div>
