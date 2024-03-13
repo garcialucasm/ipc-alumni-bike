@@ -24,11 +24,16 @@ import getClient from "./db/index"
 import bikeController from "./controllers/bike.controller"
 import accountController from "./controllers/account.controller"
 import { checkAuth } from "./utils/auth"
+import {LoggerFactory, logger } from "./logger"
+
+logger.info('Initializing db connection')
 
 let db = getClient()
 db.connect()
 
 const currentTerm = 'spring 2023'
+
+logger.info('Initializing services')
 
 const userRepository: IUserRepository = new UserRepository(db)
 const accountRepository: IAccountRepository = new AccountRepository(db)
@@ -50,7 +55,7 @@ app.use(cors())
 //}));
 app.use(express.json())
 
-app.use('/api/secure/*', checkAuth)
+//app.use('/api/secure/*', checkAuth)
 
 app.use('/api/secure/booking/', bookingController(bookingService))
 app.use('/api/secure/bike/', bikeController(bikeService))
@@ -60,8 +65,9 @@ app.get("/", async (req, res) => {
   return res.status(200).send({ Response: "IPC - Alumni Bike" })
 })
 
-const server = app.listen(3000, () => {
-  console.log("Express server started on port 3000")
+const server = app.listen(3000, function() {
+  
+  LoggerFactory.getInstance().getGlobalLogger().info("Express server started on port 3000")
 })
 
 export { app, server, db }

@@ -3,7 +3,7 @@ import IAccountService from '../services/account.service'
 import { validateEmail, validatePassword, validateUserName } from "../models/validators";
 import { AccountDTO } from "../dto/account.dto";
 import { cleanUpSpaces } from "../utils/strings";
-import { logger } from '../logger';
+import { LoggerFactory } from '../logger';
 
 
 function toAccountDTO(account: AccountDTO): AccountDTO {
@@ -17,7 +17,7 @@ function toAccountDTO(account: AccountDTO): AccountDTO {
 export default function accountController(accountService: IAccountService, routerOptions?: RouterOptions) {
 
     const router: Router = Router(routerOptions)
-
+    const logger = LoggerFactory.getInstance().getLogger('AccountController')
     /* ----------------------------- Secure Register ---------------------------- */
     router.post("/secure/register", async (req, res) => {
         logger.info("Account Controller called: POST /secure/register")

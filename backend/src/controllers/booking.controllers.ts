@@ -4,7 +4,7 @@ import IBookingService from '../services/booking.service'
 import { validateRoom, validateUserName, validateBikeNumbering } from '../models/validators'
 import { BookingDTO, BookingStatusDTO } from '../dto/booking.dto'
 import { Booking, BookingStatus, BookingType } from '../models/booking.model'
-import { logger } from '../logger'
+import { LoggerFactory } from '../logger'
 
 
 function toBookingDTO(booking: Booking): BookingDTO {
@@ -29,7 +29,7 @@ function toBookingStatusDTO(status: Map<BookingStatus, number>): BookingStatusDT
 }
 
 export default function bookingController(bookingService: IBookingService, routerOptions?: RouterOptions) {
-
+  const logger = LoggerFactory.getInstance().getLogger('bookingController')
   const router: Router = Router(routerOptions)
 
   router.get("/status", async (req, res) => {
