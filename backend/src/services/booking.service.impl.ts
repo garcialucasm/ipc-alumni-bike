@@ -1,5 +1,5 @@
 
-import { logger } from "../logger";
+import { getLogger } from "../logger";
 import { Bike, BikeStatus } from "../models/bike.model";
 import { Booking, BookingStatus, BookingType } from "../models/booking.model";
 import { User, UserStatus, UserType } from "../models/user.model";
@@ -12,6 +12,8 @@ import IUserService from "./user.service";
 /* --- Define an array to store names of users with booking in process --- */
 const usersInBookingProcess: string[] = [];
 
+const logger = getLogger('BookingService')
+
 export default class BookingService implements IBookingService {
 
   bookingRepository: IBookingRepository;
@@ -20,7 +22,7 @@ export default class BookingService implements IBookingService {
   userService: IUserService
   bikeChooser: IBikeChooser
   currentTerm: string
-
+  
   constructor(
     bookingRepository: IBookingRepository,
     bikeService: IBikeService,

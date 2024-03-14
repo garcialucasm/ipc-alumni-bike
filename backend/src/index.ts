@@ -24,8 +24,13 @@ import getClient from "./db/index"
 import bikeController from "./controllers/bike.controller"
 import accountController from "./controllers/account.controller"
 import { checkAuth } from "./utils/auth"
-import {LoggerFactory, logger } from "./logger"
+import { getLogger } from "./logger"
 
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const logger = getLogger()
 logger.info('Initializing db connection')
 
 let db = getClient()
@@ -50,12 +55,9 @@ const accountService: IAccountService = new AccountService(accountRepository)
 
 const app = express()
 app.use(cors())
-//app.use(bodyParser.urlencoded({
-//  extended: true
-//}));
 app.use(express.json())
 
-//app.use('/api/secure/*', checkAuth)
+app.use('/api/secure/*', checkAuth)
 
 app.use('/api/secure/booking/', bookingController(bookingService))
 app.use('/api/secure/bike/', bikeController(bikeService))
@@ -66,8 +68,7 @@ app.get("/", async (req, res) => {
 })
 
 const server = app.listen(3000, function() {
-  
-  LoggerFactory.getInstance().getGlobalLogger().info("Express server started on port 3000")
+  logger.info("Express server started on port 3000")
 })
 
 export { app, server, db }

@@ -2,14 +2,13 @@ import bcrypt from "bcrypt";
 import { Account } from "../models/account.model";
 import IAccountRepository from "../repositories/account.repository";
 import IAccountService from "./account.service";
-import dotenv from "dotenv"
 import { generateAsyncToken } from "../utils/auth";
 import { AccountDTO } from "../dto/account.dto";
-import { logger } from "../logger";
+import { getLogger } from "../logger";
 
 const saltRounds = 8
 
-dotenv.config()
+const logger = getLogger('AccountService') 
 
 export default class AccountService implements IAccountService {
 
@@ -20,8 +19,7 @@ export default class AccountService implements IAccountService {
   }
 
   async registerAccount(name: string, email: string, password: string): Promise<Account> {
-    logger.debug("Account Service called: registerAccount")
-    console.log("registerAccount")
+    logger.debug("registerAccount")
     let account: Account
 
     const user = await this.accountRepository.findByEmail(email)
